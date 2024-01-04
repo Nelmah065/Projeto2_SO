@@ -135,6 +135,7 @@ void wait_session_termination(void){
 
     // Criar uma nova sessão
     pthread_create(&sessions[active_sessions], NULL, session_thread, NULL);
+//resposta
 
 }
 
@@ -152,7 +153,7 @@ int main(int argc, char* argv[]) {
   char pipe_path[MAX_PIPE_NAME_SIZE];
   strcpy(pipe_path, argv[1]);
 
-  
+
 
   // 1. Criação do Named Pipe do Servidor
   if (mkfifo(pipe_path, 0666) == -1) {
