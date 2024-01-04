@@ -2,8 +2,13 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <constants.h>
-#include <eventlist.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+
+#define MAX_PIPE_NAME_SIZE 255
+#define MAX_REQUEST_SIZE 255
 
 int session_id = -1;  //Global variable to store the session ID (Inicializado como -1 para indicar que não há sessão ativa)
 char req_pipe[MAX_PIPE_NAME_SIZE];
@@ -126,18 +131,22 @@ int ems_create(unsigned int event_id, size_t num_rows, size_t num_cols) {
     // Lidar com erro, se necessário
     close(req_fd);
     return 1;
-
+    }
     //Aguarde a resposta do servidor (se necessário)
     // ...
 
+    close(req_fd);
     return 0;
   }
-}
+
 
 int ems_reserve(unsigned int event_id, size_t num_seats, size_t* xs, size_t* ys) {
   //send reserve request to the server (through the request pipe) and wait for the response (through the response pipe)
   //Implemente o envio de uma mensagem de pedido para reservar assentos
     // ...
+
+  (void)xs;  // Indica ao compilador que a variável não é utilizada
+  (void)ys; // meti isso pq estava a aparecer um warning sobre isso
 
     // Exemplo: abrir named pipe de solicitações (req_pipe) para escrita
     int req_fd = open(req_pipe , O_WRONLY);
@@ -165,7 +174,7 @@ int ems_show(int out_fd, unsigned int event_id) {
   //send show request to the server (through the request pipe) and wait for the response (through the response pipe)
   // Implemente o envio de uma mensagem de pedido para mostrar um evento
   // ...
-
+  (void)out_fd;
   // Exemplo: abrir named pipe de solicitações (req_pipe) para escrita
   int req_fd = open(req_pipe , O_WRONLY);
   if (req_fd == -1) {
@@ -192,7 +201,7 @@ int ems_list_events(int out_fd) {
   //TODO: send list request to the server (through the request pipe) and wait for the response (through the response pipe)
 // TODO: Implemente o envio de uma mensagem de pedido para listar eventos
     // ...
-
+  (void)out_fd;
     // Exemplo: abrir named pipe de solicitações (req_pipe) para escrita
     int req_fd = open(req_pipe, O_WRONLY);
     if (req_fd == -1) {

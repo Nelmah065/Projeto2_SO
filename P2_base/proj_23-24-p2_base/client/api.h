@@ -2,7 +2,6 @@
 #define CLIENT_API_H
 
 #include <stddef.h>
-#include <constants.h>
 
 #define OP_SETUP 1
 #define OP_QUIT 2
@@ -10,6 +9,10 @@
 #define OP_RESERVE 4
 #define OP_SHOW 5
 #define OP_LIST_EVENTS 6
+
+#define MAX_PIPE_NAME_SIZE 255
+#define MAX_REQUEST_SIZE 255
+
 
 typedef struct {
   char op_code;
