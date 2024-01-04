@@ -29,7 +29,7 @@ int send_message(int req_fd, char op_code, const void* data, size_t size) {
   }
 
   // Montar a mensagem (op_code + data)
-  char message[MAX_REQUEST_SIZE];
+  char message[size+1]; 
   message[0] = op_code;
   memcpy(&message[1], data, size);
 
@@ -49,11 +49,12 @@ int send_message(int req_fd, char op_code, const void* data, size_t size) {
 }
 
 int ems_setup(char const* req_pipe_path, char const* resp_pipe_path, char const* server_pipe_path) {
-  //TODO: create pipes and connect to the server
+  //create pipes and connect to the server
   if (mkfifo(req_pipe_path, 0666) == -1) {
     perror("Error creating request pipe");
-  }
   return 1;
+  }
+  
 
 // Create response pipe
   if (mkfifo(resp_pipe_path, 0666) == -1) {
@@ -105,8 +106,8 @@ int ems_quit(void) {
   close(req_fd);
   //close(resp_fd);
   // Cleanup named pipes
-  unlink("req_pipe");
-  unlink("resp_pipe");
+  unlink("req_pipe_path");
+  unlink("resp_pipe_path");
 
   return 0;
 }
