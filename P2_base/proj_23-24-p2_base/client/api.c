@@ -125,6 +125,13 @@ int ems_create(unsigned int event_id, size_t num_rows, size_t num_cols) {
         return 1;
     }
 
+/*tens que fazer o processamento dos pedidos do cliente e a resposta aos mesmos no servidor
+estou a falar de todos os comandos para além do ems_setup que no fundo só estabelece a ligação
+Para testar como deve ser tens de fazer, mas no fundo é fazeres o inverso da api
+Onde no cliente escreves no servidor lês e onde no cliente lês no servidor escreves o resultado depois de tratar do pedido
+quando falo de "todos os comandos para além do ems_setup", estou a me referir a todos aqueles na api (Create, reserve, show, list e wait)*/
+
+
   struct CreateEventData create_data = {event_id, num_rows, num_cols};
 
     //Envie uma mensagem de pedido para o servidor para criar um evento
